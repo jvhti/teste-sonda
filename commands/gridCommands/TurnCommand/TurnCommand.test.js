@@ -1,6 +1,6 @@
-const StandardProbe = require("../../probes/StandardProbe");
+const StandardProbe = require("../../../probes/StandardProbe");
 const TurnLeftCommand = require("./TurnLeftCommand");
-const directionMapper = require("../../utils/directionMapper");
+const directionMapper = require("../../../utils/directionMapper");
 const TurnRightCommand = require("./TurnRightCommand");
 
 describe('Turn Left Command', () => {

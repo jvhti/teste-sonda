@@ -1,5 +1,5 @@
-const Command = require("../Command");
-const directionMapper = require('../../utils/directionMapper');
+const Command = require("../../Command");
+const directionMapper = require('../../../utils/directionMapper');
 
 class TurnCommand extends Command {
   map = {}
