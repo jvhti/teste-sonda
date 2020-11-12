@@ -1,4 +1,5 @@
 const newVector = require('../utils/vectorMath').newVector;
+const toInternal = require('../utils/directionMapper').toInternal;
 
 class Probe {
   constructor(position, movementVector) {
@@ -7,7 +8,7 @@ class Probe {
     }
 
     this.position = position || newVector(0, 0);
-    this.movementVector = movementVector || newVector(0, 0);
+    this.movementVector = movementVector || toInternal('D');
     this._id = 0;
   }
 }
