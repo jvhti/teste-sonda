@@ -5,7 +5,7 @@ const types = require('./Types');
 const startingDirection = 'D';
 
 module.exports = (type) => {
-  if (!types.hasOwnProperty(type))
+  if (!types.hasOwnProperty(type) || !Object.keys(types).includes(type))
     throw new Error(`Invalid type of probe! Type: '${type}'`);
 
   return new types[type](newVector(0, 0), toInternal(startingDirection));
