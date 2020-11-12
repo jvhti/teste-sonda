@@ -1,3 +1,5 @@
+const vectorMath = require("./vectorMath");
+
 const dictionary = {
   'C': {x: 0, y: 1},
   'D': {x: 1, y: 0},
@@ -13,11 +15,8 @@ function toInternal(direction) {
 }
 
 function toExternal(direction) {
-  if (!direction.hasOwnProperty('x') || !direction.hasOwnProperty('y'))
-    throw new Error('Vetor de direção está mal formado!');
-
   for (const key in dictionary) {
-    if (dictionary[key].x === direction.x && dictionary[key].y === direction.y) return key;
+    if (vectorMath.isEqual(dictionary[key], direction)) return key;
   }
 
   throw new Error(`Não foi possível mapear a direção interna '${JSON.stringify(direction)}'.`);
