@@ -127,6 +127,16 @@ describe('Probe Endpoints', () => {
       expect(res.body.x).toStrictEqual(2);
       expect(res.body.y).toStrictEqual(0);
     });
+
+    it('should run the example', async function () {
+      const testSession = session(app);
+
+      await testSession.post('/probe').send();
+      const res = await testSession.put('/probe').send({movementos: ['GE', 'M', 'M', 'M', 'GD', 'M', 'M']});
+
+      expect(res.body.x).toStrictEqual(2);
+      expect(res.body.y).toStrictEqual(3);
+    });
   });
 
   describe('PUT /probe/undo', () => {
