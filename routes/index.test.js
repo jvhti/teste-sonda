@@ -138,6 +138,15 @@ describe('Probe Endpoints', () => {
       expect(res.body.x).toStrictEqual(2);
       expect(res.body.y).toStrictEqual(3);
     });
+
+    it('should run the example that is out of bounds', async function () {
+      const testSession = session(app);
+
+      await testSession.post('/probe').send();
+      const res = await testSession.put('/probe').send({movementos: ['M', 'M', 'M', 'M', 'M', 'M']});
+
+      expect(res.body).toHaveProperty('error');
+    });
   });
 
   describe('PUT /probe/undo', () => {

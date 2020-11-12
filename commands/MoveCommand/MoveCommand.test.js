@@ -14,7 +14,7 @@ describe('Move Command', () => {
     expect(probe.position.y).toStrictEqual(initialPosition.y + probe.movementVector.y);
 
     initialPosition = vectorMath.newVector(probe.position.x, probe.position.y);
-    probe.movementVector = {x: 5, y: 7};
+    probe.movementVector = {x: 2, y: 1};
 
     moveCommand.execute(probe);
     expect(probe.position.x).toStrictEqual(initialPosition.x + probe.movementVector.x);
@@ -22,7 +22,7 @@ describe('Move Command', () => {
   });
 
   it('should rollback successfully', function () {
-    const probe = new StandardProbe(vectorMath.newVector(0, 0), vectorMath.newVector(6, 2));
+    const probe = new StandardProbe(vectorMath.newVector(0, 0), vectorMath.newVector(2, 2));
     const moveCommand = new MoveCommand();
 
     let initialPosition = vectorMath.newVector(probe.position.x, probe.position.y);
@@ -34,5 +34,12 @@ describe('Move Command', () => {
     expect(probe.position.x).toStrictEqual(initialPosition.x);
     expect(probe.position.y).toStrictEqual(initialPosition.y);
 
+  });
+
+  it('should throw error if movement is out of boundaries', function () {
+    const probe = new StandardProbe(vectorMath.newVector(4, 0), vectorMath.newVector(1, 0));
+    const moveCommand = new MoveCommand();
+
+    expect(() => moveCommand.execute(probe)).toThrowError();
   });
 });
