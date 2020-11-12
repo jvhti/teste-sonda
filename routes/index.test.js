@@ -85,6 +85,7 @@ describe('Probe Endpoints', () => {
       const res = await testSession.put('/probe').send({asdasd: ['sadfs']});
 
       expect(res.body).toHaveProperty('error');
+      expect(res.statusCode).toStrictEqual(400);
     });
 
     it('should throw error if the commands are unknown', async function () {

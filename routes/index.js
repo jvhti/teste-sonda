@@ -54,8 +54,8 @@ router.put('/probe/undo', probeNotFound, function (req, res) {
 
 router.put('/probe', probeNotFound, function (req, res) {
   try {
-    if (typeof req.body.movementos !== 'object' && Array.isArray(req.body.movementos))
-      return res.status(500).json({error: "É necessário passar um array de movimentos!"});
+    if (typeof req.body.movementos !== 'object' || !Array.isArray(req.body.movementos))
+      return res.status(400).json({error: "É necessário passar um array de movimentos!"});
 
     const commands = req.body.movementos.map(CommandsManager.mapper);
     const probe = req.session.currentProbe;
