@@ -24,5 +24,6 @@ function toExternal(direction) {
 
 module.exports = {
   toInternal,
-  toExternal
+  toExternal,
+  dictionary
 };
