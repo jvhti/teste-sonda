@@ -36,6 +36,22 @@ router.get('/probe', probeNotFound, function (req, res) {
   res.status(200).json(probeViewer(req.session.currentProbe));
 });
 
+router.put('/probe/undo', probeNotFound, function (req, res) {
+  try {
+    const command = req.session.commandHistory?.pop();
+
+    if (command) {
+      CommandsManager.mapper(command).rollback(req.session.currentProbe);
+    } else {
+      res.status(404).json({error: "Nada para desfazer"});
+    }
+
+    res.status(200).json(req.session.currentProbe.position);
+  } catch (e) {
+    res.status(500).json({error: e.message});
+  }
+});
+
 router.put('/probe', probeNotFound, function (req, res) {
   try {
     if (typeof req.body.movementos !== 'object' && Array.isArray(req.body.movementos))
@@ -44,10 +60,10 @@ router.put('/probe', probeNotFound, function (req, res) {
     const commands = req.body.movementos.map(CommandsManager.mapper);
     const probe = req.session.currentProbe;
 
-    commands.forEach((command) => {
+    commands.forEach((command, i) => {
       command.execute(probe);
       req.session.commandHistory = req.session.commandHistory || [];
-      req.session.commandHistory.push(command);
+      req.session.commandHistory.push(req.body.movementos[i]);
     });
 
     res.status(200).json(probe.position);
@@ -55,5 +71,6 @@ router.put('/probe', probeNotFound, function (req, res) {
     res.status(500).json({error: e.message});
   }
 });
+
 
 module.exports = router;

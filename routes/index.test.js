@@ -128,4 +128,53 @@ describe('Probe Endpoints', () => {
       expect(res.body.y).toStrictEqual(0);
     });
   });
+
+  describe('PUT /probe/undo', () => {
+    it('should return a 404 if the probe wasn\'t created', async function () {
+      const res = await request(app).put('/probe/undo').send();
+      expect(res.statusCode).toStrictEqual(404);
+    });
+
+    it('should rollback multiple commands', async function () {
+      const testSession = session(app);
+
+      await testSession.post('/probe').send();
+      const res = await testSession.put('/probe').send({movementos: ['M', 'M', 'M']});
+
+      expect(res.body).toHaveProperty('x');
+      expect(res.body).toHaveProperty('y');
+
+      expect(res.body.x).not.toBeNaN();
+      expect(res.body.y).not.toBeNaN();
+
+      expect(res.body.x).toStrictEqual(3);
+      expect(res.body.y).toStrictEqual(0);
+
+      const res1 = await testSession.put('/probe/undo').send();
+
+      expect(res1.body.x).toStrictEqual(2);
+      expect(res1.body.y).toStrictEqual(0);
+
+      const res2 = await testSession.put('/probe/undo').send();
+
+      expect(res2.body.x).toStrictEqual(1);
+      expect(res2.body.y).toStrictEqual(0);
+
+      const res3 = await testSession.put('/probe/undo').send();
+
+      expect(res3.body.x).toStrictEqual(0);
+      expect(res3.body.y).toStrictEqual(0);
+    });
+
+    it('should throw error if there are nothing to return', async function () {
+      const testSession = session(app);
+
+      await testSession.post('/probe').send();
+      const res = await testSession.put('/probe/undo').send();
+
+      expect(res.statusCode).toStrictEqual(404);
+      expect(res.body).toHaveProperty('error');
+    });
+  });
 });
+
