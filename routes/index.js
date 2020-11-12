@@ -38,7 +38,7 @@ router.get('/probe', probeNotFound, function (req, res) {
 
 router.put('/probe/undo', probeNotFound, function (req, res) {
   try {
-    const command = req.session.commandHistory?.pop();
+    const command = (req.session.commandHistory || []).pop();
 
     if (command) {
       CommandsManager.mapper(command).rollback(req.session.currentProbe);
