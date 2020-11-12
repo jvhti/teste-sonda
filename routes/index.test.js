@@ -38,10 +38,10 @@ describe('Probe Endpoints', () => {
     });
 
     it('should delete the probe if it already exists', async function () {
-      const testSesssion = session(app);
+      const testSession = session(app);
 
-      await testSesssion.post('/probe').send();
-      const res = await testSesssion.delete('/probe').send();
+      await testSession.post('/probe').send();
+      const res = await testSession.delete('/probe').send();
 
       expect(res.statusCode).toStrictEqual(200);
       expect(res.body).toHaveProperty('probe');
@@ -57,10 +57,10 @@ describe('Probe Endpoints', () => {
     });
 
     it('should delete the probe if it already exists', async function () {
-      const testSesssion = session(app);
+      const testSession = session(app);
 
-      await testSesssion.post('/probe').send();
-      const res = await testSesssion.get('/probe').send();
+      await testSession.post('/probe').send();
+      const res = await testSession.get('/probe').send();
 
       expect(res.statusCode).toStrictEqual(200);
       expect(res.body).toHaveProperty('x');
@@ -69,6 +69,63 @@ describe('Probe Endpoints', () => {
       expect(res.body.x).not.toBeNaN();
       expect(res.body.y).not.toBeNaN();
       expect(Object.keys(directionDictionary)).toContain(res.body.face);
+    });
+  });
+
+  describe('PUT /probe', () => {
+    it('should return a 404 if the probe wasn\'t created', async function () {
+      const res = await request(app).put('/probe').send({movements: ['M']});
+      expect(res.statusCode).toStrictEqual(404);
+    });
+
+    it('should throw error if doesn\'t have movements array', async function () {
+      const testSession = session(app);
+
+      await testSession.post('/probe').send();
+      const res = await testSession.put('/probe').send({asdasd: ['sadfs']});
+
+      expect(res.body).toHaveProperty('error');
+    });
+
+    it('should throw error if the commands are unknown', async function () {
+      const testSession = session(app);
+
+      await testSession.post('/probe').send();
+      const res = await testSession.put('/probe').send({movementos: ['S']});
+
+      expect(res.body).toHaveProperty('error');
+    });
+
+    it('should move forward', async function () {
+      const testSession = session(app);
+
+      await testSession.post('/probe').send();
+      const res = await testSession.put('/probe').send({movementos: ['M']});
+
+      expect(res.body).toHaveProperty('x');
+      expect(res.body).toHaveProperty('y');
+
+      expect(res.body.x).not.toBeNaN();
+      expect(res.body.y).not.toBeNaN();
+
+      expect(res.body.x).toStrictEqual(1);
+      expect(res.body.y).toStrictEqual(0);
+    });
+
+    it('should run multiple commands', async function () {
+      const testSession = session(app);
+
+      await testSession.post('/probe').send();
+      const res = await testSession.put('/probe').send({movementos: ['M', 'M']});
+
+      expect(res.body).toHaveProperty('x');
+      expect(res.body).toHaveProperty('y');
+
+      expect(res.body.x).not.toBeNaN();
+      expect(res.body.y).not.toBeNaN();
+
+      expect(res.body.x).toStrictEqual(2);
+      expect(res.body.y).toStrictEqual(0);
     });
   });
 });
