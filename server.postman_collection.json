@@ -11,11 +11,13 @@
         "method": "POST",
         "header": [],
         "url": {
-          "raw": "localhost:3000/probe",
+          "raw": "https://teste-sonda.herokuapp.com/probe",
+          "protocol": "https",
           "host": [
-            "localhost"
+            "teste-sonda",
+            "herokuapp",
+            "com"
           ],
-          "port": "3000",
           "path": [
             "probe"
           ]
@@ -29,11 +31,13 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "localhost:3000/probe",
+          "raw": "https://teste-sonda.herokuapp.com/probe",
+          "protocol": "https",
           "host": [
-            "localhost"
+            "teste-sonda",
+            "herokuapp",
+            "com"
           ],
-          "port": "3000",
           "path": [
             "probe"
           ]
@@ -56,11 +60,13 @@
           }
         },
         "url": {
-          "raw": "localhost:3000/probe",
+          "raw": "https://teste-sonda.herokuapp.com/probe",
+          "protocol": "https",
           "host": [
-            "localhost"
+            "teste-sonda",
+            "herokuapp",
+            "com"
           ],
-          "port": "3000",
           "path": [
             "probe"
           ]
@@ -74,11 +80,13 @@
         "method": "PUT",
         "header": [],
         "url": {
-          "raw": "localhost:3000/probe/undo",
+          "raw": "https://teste-sonda.herokuapp.com/probe/undo",
+          "protocol": "https",
           "host": [
-            "localhost"
+            "teste-sonda",
+            "herokuapp",
+            "com"
           ],
-          "port": "3000",
           "path": [
             "probe",
             "undo"
@@ -93,11 +101,13 @@
         "method": "DELETE",
         "header": [],
         "url": {
-          "raw": "localhost:3000/probe",
+          "raw": "https://teste-sonda.herokuapp.com/probe",
+          "protocol": "https",
           "host": [
-            "localhost"
+            "teste-sonda",
+            "herokuapp",
+            "com"
           ],
-          "port": "3000",
           "path": [
             "probe"
           ]
