@@ -16,4 +16,13 @@ router.post('/probe', function (req, res) {
   }
 });
 
+router.delete('/probe', function (req, res) {
+  if (!req.session.currentProbe)
+    return res.status(404).json({error: "Não foi encontrado nenhuma sonda em ação!"});
+
+  const probe = req.session.currentProbe;
+  req.session.currentProbe = null;
+  res.status(200).json({probe: probeViewer(probe), deleted: true});
+});
+
 module.exports = router;

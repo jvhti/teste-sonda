@@ -1,4 +1,5 @@
 const request = require('supertest');
+const session = require('supertest-session');
 const app = require('../app');
 
 describe('Probe Endpoints', () => {
@@ -25,6 +26,25 @@ describe('Probe Endpoints', () => {
 
       expect(res.body.type).toStrictEqual('Standard');
       expect(res.body.id).toStrictEqual(0);
+    });
+  });
+
+  describe('DELETE /probe', () => {
+    it('should return a 404 if the probe wasn\'t created', async function () {
+      const res = await request(app).delete('/probe').send();
+      expect(res.statusCode).toStrictEqual(404);
+    });
+
+    it('should delete the probe if it already exists', async function () {
+      const testSesssion = session(app);
+
+      await testSesssion.post('/probe').send();
+      const res = await testSesssion.delete('/probe').send();
+
+      expect(res.statusCode).toStrictEqual(200);
+      expect(res.body).toHaveProperty('probe');
+      expect(res.body).toHaveProperty('deleted');
+      expect(res.body.deleted).toBeTruthy();
     });
   });
 });

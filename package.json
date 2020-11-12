@@ -21,6 +21,7 @@
   "devDependencies": {
     "express-session": "^1.17.1",
     "jest": "^26.6.3",
-    "supertest": "^6.0.1"
+    "supertest": "^6.0.1",
+    "supertest-session": "^4.1.0"
   }
 }
