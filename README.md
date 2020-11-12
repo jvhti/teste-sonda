@@ -6,6 +6,12 @@
 
 ## Execução
 
+Testar:
+
+    npm run test
+
+Iniciar servidor:
+
     npm run start
     
 ## DEMO
