@@ -50,4 +50,24 @@ describe('Vector Math', function () {
       expect(res.y).toBe(a.y + b.y);
     });
   });
+
+  describe('sub', function () {
+    it('should throw an error if the vector doesn\'t have X and Y properties', function () {
+      expect(() => vectorMath.sub({d: 5, e: 6}, {x: 1, y: 2})).toThrow();
+      expect(() => vectorMath.sub({x: 1, y: 2}, {d: 5, e: 6})).toThrow();
+    });
+
+    it('should return a new object with the sum of the input vectors', function () {
+      const a = {x: 5, y: 6};
+      const b = {x: 1, y: 5};
+
+      const res = vectorMath.sub(a, b);
+
+      expect(res).toHaveProperty('x');
+      expect(res).toHaveProperty('y');
+
+      expect(res.x).toBe(a.x - b.x);
+      expect(res.y).toBe(a.y - b.y);
+    });
+  });
 });

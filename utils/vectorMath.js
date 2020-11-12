@@ -19,8 +19,15 @@ function add(a, b) {
   return {x: a.x + b.x, y: a.y + b.y};
 }
 
+function sub(a, b) {
+  _validateVector(a);
+  _validateVector(b);
+  return {x: a.x - b.x, y: a.y - b.y};
+}
+
 module.exports = {
   newVector,
   isEqual,
-  add
+  add,
+  sub
 };
